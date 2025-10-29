@@ -1,0 +1,20 @@
+🔧 COMPONENTS REQUIRED
+
+Electronics:
+
+· ✅ ESP8266 NodeMCU
+· ✅ IRF3205 MOSFET
+· ✅ 220Ω Resistor (Red-Red-Brown)
+· ✅ 10KΩ Resistor (Brown-Black-Orange)
+· ✅ 1N4007 Diode
+· ✅ 5A Fuse + Holder
+· ✅ 3x 18650 Li-ion Batteries
+· ✅ 3S Battery Holder
+· ✅ 3S BMS Module
+· ✅ Nichrome Wire (HCA 317, 0.3mm)
+· ✅ Breadboard & Jumper Wires
+
+Power:
+
+· ✅ Power Bank (for ESP8266)
+· ✅ 3S Li-ion Charger
