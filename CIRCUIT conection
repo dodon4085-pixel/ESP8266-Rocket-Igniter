@@ -1,0 +1,129 @@
+🔋 POWER CONNECTIONS:
+
+1. ESP8266 Power:
+
+```
+POWER BANK → USB Cable → NodeMCU USB Port
+```
+
+2. Battery Pack:
+
+```
+3x 18650 → Battery Holder → 3S BMS
+BMS P+ → +11.1V OUTPUT
+BMS P- → GND OUTPUT
+```
+
+🔥 MAIN IGNITION CIRCUIT:
+
+3. High Current Path:
+
+```
+BMS P+ (11.1V) → 5A FUSE → NICHROME WIRE → MOSFET DRAIN (Pin 2)
+MOSFET SOURCE (Pin 3) → BMS P- (GND)
+```
+
+🛡️ PROTECTION CIRCUIT:
+
+4. Diode Connection:
+
+```
+1N4007 DIODE:
+- CATHODE (Striped end) → MOSFET DRAIN
+- ANODE → BMS P+ (11.1V)
+```
+
+🎛️ CONTROL CIRCUIT:
+
+5. MOSFET Control:
+
+```
+NodeMCU D1 → 220Ω RESISTOR → MOSFET GATE (Pin 1)
+MOSFET GATE → 10K RESISTOR → BMS P- (GND)
+```
+
+🔗 COMMON GROUND (CRITICAL):
+
+6. Ground Connections:
+
+```
+NodeMCU GND → BMS P- (GND)
+[ALL GNDs CONNECTED TOGETHER]
+```
+
+📍 PIN-TO-PIN CONNECTIONS:
+
+NodeMCU:
+
+· D1 → 220Ω → MOSFET GATE
+· GND → BMS P- (GND)
+· USB → Power Bank
+
+MOSFET IRF3205:
+
+· GATE (Pin 1) → 220Ω from D1 + 10K to GND
+· DRAIN (Pin 2) → Nichrome from BMS P+
+· SOURCE (Pin 3) → BMS P- (GND)
+
+BMS:
+
+· P+ → Fuse → Nichrome
+· P- → MOSFET SOURCE + NodeMCU GND + 10K Resistor
+
+⚡ CIRCUIT OPERATION:
+
+When IGNITE Command:
+
+1. Web interface → "IGNITE" click
+2. NodeMCU D1 goes HIGH (3.3V)
+3. MOSFET GATE gets voltage → Turns ON
+4. Current flows: Battery → Fuse → Nichrome → MOSFET → GND
+5. Nichrome heats up (4 seconds)
+6. Auto cutoff → MOSFET OFF
+
+🎯 VISUAL CIRCUIT FLOW:
+
+```
+POWER BANK → NodeMCU USB
+    ↓
+BMS P+ → FUSE → NICHROME → MOSFET DRAIN → MOSFET SOURCE → BMS P-
+    ↑              ↓               ↓        ↓
+    └── DIODE ←────┘               │        │
+    ↑                              │        │
+    └── 10K ←── GATE ←── 220Ω ←── D1       │
+    ↓                                      │
+    └── COMMON GND ←── NodeMCU GND ←───────┘
+```
+
+⚠️ SAFETY CHECKLIST:
+
+· ✅ FUSE installed in series with BMS P+
+· ✅ DIODE correct direction (Striped to DRAIN)
+· ✅ COMMON GND connected
+· ✅ All connections tight and secure
+· ✅ Battery polarity correct
+
+🔧 TESTING SEQUENCE:
+
+1. Power Test:
+
+· Power Bank → NodeMCU → Blue LED on
+· Battery → BMS → Output voltage check (11.1V)
+
+2. WiFi Test:
+
+· Connect to "Biswajit_Igniter" WiFi
+· Open 192.168.4.1 in browser
+· Web interface show
+
+3. Control Test:
+
+· Web interface → "INSTANT" mode → "IGNITE"
+· MOSFET should activate for 4 seconds
+
+4. Full Test:
+
+· Connect nichrome → Short ignition test
+· Nichrome should glow red hot
+
+🎯 CIRCUIT COMPLETE! READY FOR DEPLOYMENT! 🔥
